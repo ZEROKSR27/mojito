@@ -1,78 +1,99 @@
 "use client";
-import Image from "next/image";
-import React from "react";
-import left from "@/public/images/hero-left-leaf.png";
-import right from "@/public/images/hero-right-leaf.png";
-import Link from "next/link";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
-import { SplitText } from "gsap/SplitText";
+import { gsap, SplitText } from "@/lib/gsap";
+import { useRef } from "react";
+import { useMediaQuery } from "react-responsive";
+import Image from "next/image";
+import leftLeaf from "@/public/images/hero-left-leaf.png";
+import rightLeaf from "@/public/images/hero-right-leaf.png";
 
-export default function Hero() {
+const Hero = () => {
+    const videoRef: React.RefObject<HTMLVideoElement | null> = useRef(null);
+
+    const isMobile = useMediaQuery({ maxWidth: 767 });
+
     useGSAP(() => {
-        const HeroSplit = new SplitText(".title", { type: "chars, words" });
+        const heroSplit = new SplitText(".title", {
+            type: "chars, words",
+        });
+
         const paragraphSplit = new SplitText(".subtitle", {
             type: "lines",
         });
 
-        HeroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
-
-        gsap.from(HeroSplit.chars, {
-            yPercent: 50,
+        // heroAnimation
+        // Apply text-gradient class once before animating
+        heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
+        gsap.from(heroSplit.chars, {
+            yPercent: 100,
             duration: 1.8,
             ease: "expo.out",
-            stagger: 0.06,
-            opacity: 0,
+            stagger: 0.07,
         });
-
+        // pAnimation
         gsap.from(paragraphSplit.lines, {
+            opacity: 0,
             yPercent: 100,
             duration: 1.8,
             ease: "expo.out",
             stagger: 0.06,
-            opacity: 0,
             delay: 1,
         });
-
-        const leafsTL = gsap.timeline({
+        // leafAnimation
+        gsap.timeline({
             scrollTrigger: {
                 trigger: "#hero",
                 start: "top top",
                 end: "bottom top",
                 scrub: true,
             },
+        })
+            .to(".right-leaf", { y: 700 }, 0)
+            .to(".left-leaf", { y: -200 }, 0);
+        // videoAnimation
+        const startValue = isMobile ? "top 50%" : "center 60%";
+        const endValue = isMobile ? "120% top" : "bottom top";
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "video",
+                start: startValue,
+                end: endValue,
+                scrub: true,
+                pin: true,
+            },
         });
 
-        leafsTL
-            .to(".right-leaf", { y: 500 }, 0)
-            .to(".left-leaf", { y: 200 }, 0);
+        if (!videoRef.current) {
+            console.log("false", videoRef.current);
+            return;
+        }
 
-        // gsap.to(".left-leaf", {
-        //     y: -200,
-        //     scrollTrigger: {
-        //         trigger: "#hero",
-        //         start: "top top",
-        //         end: "bottom top",
-        //         scrub: true,
-        //     },
-        // });
-    });
+        tl.to(videoRef.current, {
+            currentTime: videoRef.current?.duration,
+        });
+    }, []);
 
     return (
         <>
             <section id="hero" className="noisy">
                 <h1 className="title tracking-tighter">MOJITO</h1>
-                <Image src={left} alt="left leaf" className="left-leaf" />
-                <Image src={right} alt="right leaf" className="right-leaf" />
+
+                <Image src={leftLeaf} alt="left-leaf" className="left-leaf" />
+                <Image
+                    src={rightLeaf}
+                    alt="right-leaf"
+                    className="right-leaf"
+                />
 
                 <div className="body">
+                    {/* <img src="/images/arrow.png" alt="arrow" className="arrow" /> */}
+
                     <div className="content">
-                        <div className=" space-y-5 hidden  md:block">
-                            <p className="alsoAnimated">
-                                Coll. Crisp. Classic.
-                            </p>
+                        <div className="space-y-5 hidden md:block">
+                            <p>Cool. Crisp. Classic.</p>
                             <p className="subtitle">
-                                Sip The Spirit <br /> OF Summer
+                                Sip the Spirit <br /> of Summer
                             </p>
                         </div>
 
@@ -82,11 +103,24 @@ export default function Hero() {
                                 ingredients, creative flair, and timeless
                                 recipes — designed to delight your senses.
                             </p>
-                            <Link href={"#cocktails"}>View Cocktails</Link>
+                            <a href="#cocktails">View cocktails</a>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <div className="video absolute inset-0">
+                <video
+                    autoPlay
+                    ref={videoRef}
+                    muted
+                    playsInline
+                    preload="auto"
+                    src="/videos/output.mp4"
+                />
+            </div>
         </>
     );
-}
+};
+
+export default Hero;
