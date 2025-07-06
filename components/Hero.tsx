@@ -109,7 +109,7 @@ const Hero = () => {
                 </div>
             </section>
 
-            <div className="video absolute inset-0">
+            <div className=" absolute inset-0">
                 <video
                     autoPlay
                     ref={videoRef}
