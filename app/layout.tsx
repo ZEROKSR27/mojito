@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Mona_Sans } from "next/font/google";
 import "./globals.css";
-import LoadingOverlay from "@/components/loaderOverlay";
 
 const geistSans = Mona_Sans({
     variable: "--font-mona-sans",
@@ -21,7 +20,6 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${geistSans.className}  antialiased`}>
-                {/* <LoadingOverlay /> */}
                 {children}
             </body>
         </html>

@@ -1,5 +1,3 @@
-"use client";
-
 import About from "@/components/About";
 import Art from "@/components/Art";
 import Cocktails from "@/components/Cocktails";

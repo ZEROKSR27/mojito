@@ -13,10 +13,6 @@ const Contact = () => {
             <div className="content">
                 <h2>Where to Find Us</h2>
 
-                <span className=" p-3 w-fit  mx-auto text-xl text-amber-100 hover:p-4 transition-all bg-black">
-                    Change page URL
-                </span>
-
                 <div>
                     <h3>Contact Us</h3>
                     <p>(555) 987-6543</p>
