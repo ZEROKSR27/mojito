@@ -65,13 +65,15 @@ const Hero = () => {
         });
 
         if (!videoRef.current) {
-            console.log("false", videoRef.current);
+            console.log("video is not there", videoRef.current);
             return;
+        } else {
+            videoRef.current.onloadedmetadata = () => {
+                tl.to(videoRef.current, {
+                    currentTime: videoRef.current!.duration,
+                });
+            };
         }
-
-        tl.to(videoRef.current, {
-            currentTime: videoRef.current?.duration,
-        });
     }, []);
 
     return (
@@ -109,7 +111,7 @@ const Hero = () => {
                 </div>
             </section>
 
-            <div className=" absolute inset-0">
+            <div className="video absolute inset-0">
                 <video
                     autoPlay
                     ref={videoRef}

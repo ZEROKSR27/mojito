@@ -32,6 +32,12 @@ body {
     background-clip: text;
     color: transparent;
 }
+@utility text-gradient-green {
+    background: linear-gradient(to bottom, #d8f999, ##7ccf00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
 
 @utility radial-gradient {
     background: radial-gradient(
@@ -122,9 +128,9 @@ body {
         }
     }
 
-    /* video {
+    video {
         @apply w-full md:h-[80%] h-1/2 absolute bottom-0 left-0 md:object-contain object-bottom object-cover;
-    } */
+    }
 
     #cocktails {
         @apply relative min-h-dvh w-full overflow-hidden;
@@ -256,7 +262,7 @@ body {
                 @apply opacity-0   space-y-5 relative;
 
                 h3 {
-                    @apply md:text-5xl text-2xl   font-serif md:w-full md:pt-8 w-80 text-white;
+                    @apply md:text-5xl text-2xl   font-serif md:w-full md:pt-12 w-80 text-white;
                 }
 
                 p {

@@ -12,7 +12,7 @@ export default function Art() {
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
     useGSAP(() => {
-        const start = isMobile ? "top top" : "top top";
+        const start = isMobile ? "10% top" : "top top";
 
         const maskTimeline = gsap.timeline({
             scrollTrigger: {
@@ -86,7 +86,7 @@ export default function Art() {
                     </ul>
                 </div>
 
-                <div className="masked-container">
+                <div className="masked-container ">
                     <h2 className="will-fade">Sip-Worthy Perfection</h2>
 
                     <div id="masked-content">

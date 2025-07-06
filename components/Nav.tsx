@@ -43,7 +43,9 @@ export default function Nav() {
                 <ul>
                     {navLinks.map((link) => (
                         <li key={link.id}>
-                            <Link href={"#"}>{link.title}</Link>
+                            <Link href={link.src || "#" + link.id}>
+                                {link.title}
+                            </Link>
                         </li>
                     ))}
                 </ul>
